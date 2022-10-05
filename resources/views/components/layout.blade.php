@@ -14,12 +14,17 @@
 
                 </a>
             </div>
-            <div class="mt-8 md:mt-0">
-                <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">Log out</a>
-
-            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <div class="mt-8 md:mt-0">
+                    <button type="submit">
+                        <span class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                            Log out
+                        </span>
+                    </button>
+                </div>
+            </form>
         </nav>
-
 
 
         {{$slot}}

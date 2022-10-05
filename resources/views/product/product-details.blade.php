@@ -10,10 +10,10 @@
 
             <div class="col-span-8">
                 <div class="hidden lg:flex justify-between mb-6">
-                    <a href="#"
+                    <a href="{{url()->previous()}}"
                        class="transition-colors duration-300 relative inline-flex items-center text-lg hover:text-blue-500">
                         <x-right-arrow/>
-                        Back to Posts
+                        Back to Product list
                     </a>
                 </div>
 

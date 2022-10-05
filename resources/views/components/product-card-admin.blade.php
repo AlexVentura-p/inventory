@@ -25,9 +25,13 @@
                     <div class="ml-3">
                         <h5 class="font-bold">Status: </h5>
                         @if($product->is_visible ==0)
-                            <h6>No visible</h6>
+                            <h6 class="transition-colors duration-300 text-xs font-semibold bg-green-200 hover:bg-green-300 rounded-full py-2 px-8">
+                                No visible
+                            </h6>
                         @else
-                            <h6>Visible</h6>
+                            <h6 class="transition-colors duration-300 text-xs font-semibold bg-red-200 hover:bg-red-300 rounded-full py-2 px-8">
+                                Visible
+                            </h6>
                         @endif
 
                     </div>

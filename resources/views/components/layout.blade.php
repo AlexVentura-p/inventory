@@ -14,16 +14,34 @@
 
                 </a>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <div class="mt-8 md:mt-0">
-                    <button type="submit">
-                        <span class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                            Log out
+
+            @if(auth()->guest())
+                <form method="GET" action="{{ route('login') }}">
+                    @csrf
+                    <div class="mt-8 md:mt-0">
+                        <button type="submit">
+                            <span class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                                Log in
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            @else
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <div class="mt-8 md:mt-0">
+                        <span class="font-semibold lg:text-center">
+                            Hello {{ Auth::user()->first_name}}
                         </span>
-                    </button>
-                </div>
-            </form>
+                        <button type="submit">
+                            <span class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                                Log out
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            @endif
+
         </nav>
 
 

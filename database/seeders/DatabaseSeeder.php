@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,5 +26,14 @@ class DatabaseSeeder extends Seeder
         foreach (Order::all() as $order){
             $order->updateTotals();
         }
+
+        User::factory()->create([
+            'first_name' => 'alex',
+            'last_name' => 'ventura',
+            'email' => 'av@gmail.com',
+            'role' => 'admin',
+            'password' => Hash::make('12345678')
+        ]);
+
     }
 }

@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Laravel From Scratch Blog</title>
+<title>Inventory Challenge</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,12 +14,17 @@
 
                 </a>
             </div>
-            <div class="mt-8 md:mt-0">
-                <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">Log out</a>
-
-            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <div class="mt-8 md:mt-0">
+                    <button type="submit">
+                        <span class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                            Log out
+                        </span>
+                    </button>
+                </div>
+            </form>
         </nav>
-
 
 
         {{$slot}}

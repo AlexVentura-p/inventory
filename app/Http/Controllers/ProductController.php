@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function showProductsForCustomer()
     {
-        return view('products-list', [
+        return view('product.products-list', [
             'products' => Product::where('is_visible', '=', 1)
                 ->filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
                 ->paginate(10)
@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function showProductsForAdmin()
     {
-        return view('products-list-admin', [
+        return view('product.products-list-admin', [
             'products' => Product::filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
                 ->paginate(10)
         ]);
@@ -30,7 +30,7 @@ class ProductController extends Controller
             abort(404);
         }
 
-        return view('product-details',[
+        return view('product.product-details',[
             'product' => $product
         ]);
 

@@ -14,6 +14,8 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
+    public $guarded = [];
+
     public function orders()
     {
         return $this->hasMany(Order::class);

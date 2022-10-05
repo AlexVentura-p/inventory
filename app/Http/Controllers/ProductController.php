@@ -11,7 +11,7 @@ class ProductController extends Controller
 
          return view('products',[
              'products' => Product::where('is_visible','=',1)
-                 ->filter(request(['search','sortBy','priceRange']))
+                 ->filter(request(['search', 'sortBy','minPrice','maxPrice']))
                  ->paginate(10)
          ]);
     }

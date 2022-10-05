@@ -18,7 +18,7 @@ class Product extends Model
 
     public function scopeFilter($query, array $filters)
     {
-
+        //dd($filters);
         if ($filters['search'] ?? false){
             $query->where('title','like','%'.request('search').'%');
         }
@@ -27,6 +27,15 @@ class Product extends Model
 
             $data = $this->sortBy($filters['sortBy']);
             $query->orderBy($data['column'],$data['sort']);
+        }
+
+        if($filters['maxPrice'] ??  false){
+
+            $min = ($filters['minPrice'] ?? false) ? $filters['minPrice'] : 0 ;
+
+            if ($filters['maxPrice'] > $min){
+                $query->whereBetween('unit_price',[$min,$filters['maxPrice']]);
+            }
         }
 
     }
@@ -47,6 +56,11 @@ class Product extends Model
                 return ['column' => 'title','sort'=>'asc'];
                 break;
         }
+    }
+
+    private function maxAndMin()
+    {
+
     }
 
 

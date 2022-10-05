@@ -58,10 +58,5 @@ class Product extends Model
         }
     }
 
-    private function maxAndMin()
-    {
-
-    }
-
 
 }

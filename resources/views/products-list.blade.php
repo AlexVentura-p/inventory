@@ -11,9 +11,8 @@
                 @else
                     <span class="text-black-500">No available products found</span>
                 @endif
-                {{$products->links()}}
             </div>
-
+            {{$products->withQueryString()->links()}}
         </div>
     </main>
 </x-layout>

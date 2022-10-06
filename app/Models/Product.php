@@ -11,6 +11,8 @@ class Product extends Model
     use HasFactory;
     public $timestamps = false;
 
+    public $guarded = [];
+
     public function lineItems()
     {
         return $this->hasMany(LineItem::class);

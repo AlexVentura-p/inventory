@@ -17,9 +17,15 @@ class CheckIfAdmin
      */
     public function handle(Request $request, Closure $next)
     {
+
+        if(auth()->guest()){
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
         if (auth()->user()->role != 'admin') {
             abort(Response::HTTP_FORBIDDEN);
         }
+
         return $next($request);
     }
 }

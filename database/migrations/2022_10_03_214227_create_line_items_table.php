@@ -15,10 +15,10 @@ class CreateLineItemsTable extends Migration
     {
         Schema::create('line_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("order_id")
-                ->constrained("orders")->onDelete('cascade');
-            $table->foreignId("product_id")
-                ->constrained("products")->onDelete('cascade');
+            $table->foreignId("order_id")->nullable()
+                ->constrained("orders")->onDelete('SET NULL');
+            $table->foreignId("product_id")->nullable()
+                ->constrained("products")->onDelete('SET NULL');
             $table->integer("quantity");
             $table->float("unit_price");
             $table->float("item_total");

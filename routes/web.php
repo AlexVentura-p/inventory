@@ -33,6 +33,10 @@ Route::middleware('admin')->group(function () {
 
     Route::post('admin/products/delete/{product:title}',[ProductManagementController::class,'delete']);
 
+    Route::get('admin/products/manager/edit/{product:title}',[ProductManagementController::class,'editPage']);
+
+    Route::patch('admin/products/edit/{product}',[ProductManagementController::class,'edit']);
+
 });
 
 

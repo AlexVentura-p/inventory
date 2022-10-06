@@ -21,7 +21,27 @@
                     <p>{{$product->description}}</p>
                 </div>
                 <div class="space-y-4 lg:text-lg leading-loose">
-                    <p><span class="text-3xl text-gray-900 dark:text-white">Price:</span> ${{$product->unit_price}}</p>
+                    <p><span class="font-bold">Price:</span> ${{$product->unit_price}}</p>
+                </div>
+                <div class="space-y-4 lg:text-lg leading-loose flex flex-col">
+                    <p class="font-bold">Status:
+                        @if($product->is_visible ==0)
+                            <span class="transition-colors duration-300 font-semibold bg-red-200 hover:bg-red-300 rounded-full px-8">
+                                No visible
+                            </span>
+                        @else
+                            <span class="transition-colors duration-300 font-semibold bg-green-200 hover:bg-green-300 rounded-full px-8">
+                                Visible
+                            </span>
+                        @endif
+                    </p>
+                </div>
+                <div class="space-y-4 lg:text-lg leading-loose">
+                    <a href="{{url('admin/products/manager/edit/'.$product->title)}}" >
+                        <span class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8">
+                             Edit
+                        </span>
+                    </a>
                 </div>
             </div>
         </article>

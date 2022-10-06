@@ -14,9 +14,9 @@ class ProductManagementController extends Controller
         return view('product.create-product');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $attributes = $request->validate([
+        $attributes = request()->validate([
             'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
             'description' => ['required', 'string', 'max:255'],
             'unit_price' => ['required', 'numeric'],
@@ -34,27 +34,32 @@ class ProductManagementController extends Controller
 
         Product::where('id','=',$product->id)->delete();
 
-        return view('product.products-list-admin');
+        return redirect('admin/products');
     }
 
-    public function edit(Request $request)
+    public function editPage(Product $product)
+    {
+        return view('product.edit-product',[
+            'product' => $product
+        ]);
+    }
+
+    public function edit(Product $product)
     {
 
-        $request->validate(['id' => ['required']]);
-        $this->validateProductDetails($request);
+        $attributes = request()->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'unit_price' => ['required', 'numeric'],
+            'type' => ['required'],
+            'is_visible' => ['required','numeric']
+        ]);
 
-        $product = Product::find($request->id);
+        $product->update($attributes);
+
+
+        return redirect('admin/products/'.$attributes['title']);;
 
     }
 
-//    private function validateProductDetails(Request $request)
-//    {
-//        return $request->validate([
-//            'title' => ['required', 'string', 'max:255',Rule::unique('title','products')],
-//            'description' => ['required', 'string', 'max:255'],
-//            'unit_price' => ['required', 'numeric'],
-//            'type' => ['required'],
-//            'is_visible' => ['required','numeric']
-//        ]);
-//    }
 }

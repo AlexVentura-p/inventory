@@ -1,4 +1,4 @@
-<x-layout>
+<x-base-layout>
     <x-products-header/>
     <main class="max-w-6xl mx-auto mt-6 lg:mt-10 space-y-6">
         <div>
@@ -22,6 +22,6 @@
             {{$products->withQueryString()->links()}}
         </div>
     </main>
-</x-layout>
+</x-base-layout>
 
 

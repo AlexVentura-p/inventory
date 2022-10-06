@@ -1,4 +1,4 @@
-<x-layout>
+<x-base-layout>
         <div class="min-h-screen flex flex-col sm:justify-center items-center">
             <div class="w-full max-w-xl bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <form method="POST" action="{{ url('admin/products/store') }}">
@@ -70,4 +70,4 @@
                 <x-validation-errors class="mb-4" :errors="$errors" />
             </div>
         </div>
-</x-layout>
+</x-base-layout>

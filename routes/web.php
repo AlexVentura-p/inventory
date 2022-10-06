@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\ProductManagerController;
+use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,25 +18,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index']);
-Route::get('products',[ProductController::class,'showProductsForCustomer']);
+Route::get('products',[ProductController::class,'index']);
 Route::get('products/{product:title}',[ProductController::class,'productDetails']);
 
 
 Route::middleware('admin')->group(function () {
 
-    Route::get('admin/products',[ProductController::class,'showProductsForAdmin']);
+    Route::get('admin/products',[AdminProductController::class,'index']);
 
-    Route::get('admin/products/{product:title}',[ProductController::class,'productDetailsAdmin']);
+    Route::get('admin/products/{product:title}',[AdminProductController::class,'productDetails']);
 
-    Route::post('admin/products/store',[ProductManagementController::class,'store']);
+    Route::post('admin/products/store',[ProductManagerController::class,'store']);
 
-    Route::get('admin/products/manager/create',[ProductManagementController::class,'createProductForm']);
+    Route::get('admin/products/manager/create',[ProductManagerController::class,'createForm']);
 
-    Route::post('admin/products/delete/{product:title}',[ProductManagementController::class,'delete']);
+    Route::post('admin/products/delete/{product:title}',[ProductManagerController::class,'delete']);
 
-    Route::get('admin/products/manager/edit/{product:title}',[ProductManagementController::class,'editPage']);
+    Route::get('admin/products/manager/edit/{product:title}',[ProductManagerController::class,'editForm']);
 
-    Route::patch('admin/products/edit/{product}',[ProductManagementController::class,'edit']);
+    Route::patch('admin/products/edit/{product}',[ProductManagerController::class,'edit']);
 
 });
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProductManagementController extends Controller
+class ProductManagerController extends Controller
 {
 
-    public function createProductForm()
+    public function createForm()
     {
         return view('product.create-product');
     }
@@ -37,7 +37,7 @@ class ProductManagementController extends Controller
         return redirect('admin/products');
     }
 
-    public function editPage(Product $product)
+    public function editForm(Product $product)
     {
         return view('product.edit-product',[
             'product' => $product

@@ -20,7 +20,7 @@ class Product extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        //dd($filters);
+
         if ($filters['search'] ?? false){
             $query->where('title','like','%'.request('search').'%');
         }
@@ -47,16 +47,12 @@ class Product extends Model
         switch ($sortOption){
             case "price-desc":
                 return ['column' => 'unit_price','sort'=>'desc'];
-                break;
             case "price":
                 return ['column' => 'unit_price','sort'=>'asc'];
-                break;
             case "title-desc":
                 return ['column' => 'title','sort'=>'desc'];
-                break;
             case "title":
                 return ['column' => 'title','sort'=>'asc'];
-                break;
         }
     }
 

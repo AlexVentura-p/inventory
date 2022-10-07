@@ -19,7 +19,7 @@ class ProductManagerController extends Controller
         $attributes = request()->validate([
             'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
             'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric'],
+            'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
             'is_visible' => ['required','numeric']
         ]);
@@ -50,7 +50,7 @@ class ProductManagerController extends Controller
         $attributes = request()->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric'],
+            'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
             'is_visible' => ['required','numeric']
         ]);

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProductManagementController extends Controller
+class ProductManagerController extends Controller
 {
 
-    public function createProductForm()
+    public function createForm()
     {
         return view('product.create-product');
     }
@@ -19,7 +19,7 @@ class ProductManagementController extends Controller
         $attributes = request()->validate([
             'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
             'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric'],
+            'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
             'is_visible' => ['required','numeric']
         ]);
@@ -37,7 +37,7 @@ class ProductManagementController extends Controller
         return redirect('admin/products');
     }
 
-    public function editPage(Product $product)
+    public function editForm(Product $product)
     {
         return view('product.edit-product',[
             'product' => $product
@@ -50,7 +50,7 @@ class ProductManagementController extends Controller
         $attributes = request()->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric'],
+            'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
             'is_visible' => ['required','numeric']
         ]);

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function showProductsForCustomer()
+    public function index()
     {
         return view('product.products-list', [
             'products' => Product::where('is_visible', '=', 1)
@@ -16,13 +16,6 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showProductsForAdmin()
-    {
-        return view('product.products-list-admin', [
-            'products' => Product::filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
-                ->paginate(10)
-        ]);
-    }
 
     public function productDetails(Product $product)
     {
@@ -36,12 +29,5 @@ class ProductController extends Controller
 
     }
 
-    public function productDetailsAdmin(Product $product)
-    {
 
-        return view('product.product-details-admin',[
-            'product' => $product
-        ]);
-
-    }
 }

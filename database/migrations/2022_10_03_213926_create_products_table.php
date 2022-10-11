@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string("title")->unique();
             $table->string("description");
             $table->integer('is_visible');
+            $table->float('rating')->nullable();
             $table->float("unit_price");
         });
     }

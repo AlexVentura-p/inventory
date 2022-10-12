@@ -1,3 +1,4 @@
+@props(['categories'])
 <header {{ $attributes->class(['max-w mx-auto mt-20 text-center']) }}>
     <h1 class="text-4xl">
         <span class="text-blue-500">Products list</span>
@@ -5,6 +6,22 @@
 
     <div class="space-y-2 lg:space-y-0 lg:space-x-4 mt-8">
         <form method="GET" action="#">
+
+            <!--  Categories -->
+            <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">
+
+                <select name="category"
+                        class="flex-1 appearance-none bg-transparent py-2 pl-3 pr-9 text-sm font-semibold">
+                    <option disabled selected>Category
+                    </option>
+
+                    @foreach($categories as $category )
+                        <option value="{{$category->name}}"> {{$category->name}} </option>
+                    @endforeach
+                </select>
+                <x-down-arrow/>
+            </div>
+
             <!--  Order by -->
             <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl">
 

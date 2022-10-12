@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -12,7 +13,8 @@ class ProductController extends Controller
         return view('product.products-list', [
             'products' => Product::where('is_visible', '=', 1)
                 ->filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
-                ->paginate(10)
+                ->paginate(10),
+            'categories' => Category::all()
         ]);
     }
 

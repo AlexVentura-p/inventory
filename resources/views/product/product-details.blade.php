@@ -23,6 +23,7 @@
                 <div class="space-y-4 lg:text-lg leading-loose">
                     <p><span class="text-3xl text-gray-900 dark:text-white">Price:</span> ${{$product->unit_price}}</p>
                 </div>
+                <x-product.categories :product="$product"/>
             </div>
         </article>
     </main>

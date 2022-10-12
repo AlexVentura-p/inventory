@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 
 class AdminProductController extends Controller
 {
     public function index()
     {
+
         return view('product.products-list-admin', [
-            'products' => Product::filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
-                ->paginate(10)
+            'products' => Product::filter(request(['search', 'sortBy', 'minPrice', 'maxPrice','category']))
+                ->paginate(10),
+            'categories' => Category::all()
         ]);
     }
 

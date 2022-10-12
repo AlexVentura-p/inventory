@@ -20,16 +20,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(5)->create();
-        Product::factory(20)->create();
+
         Category::factory(5)->create();
+        $categories = Category::all();
+
+        Product::factory(20)->create()->each(function ($product) use ($categories) {
+            $product->categories()->attach(
+                $categories->random(rand(1,2))->pluck('id')->toArray()
+            );
+        });
+
         Order::factory(10)
             ->has(LineItem::factory()->count(2))
             ->create();
+
         foreach (Order::all() as $order){
             $order->updateTotals();
         }
-
-
 
         User::factory()->create([
             'first_name' => 'alex',

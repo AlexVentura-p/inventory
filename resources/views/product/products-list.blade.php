@@ -1,5 +1,5 @@
 <x-base-layout>
-    <x-product.products-header/>
+    <x-product.products-header :categories="$categories" />
     <main class="max-w-6xl mx-auto mt-6 lg:mt-10 space-y-6">
         <div class="overflow-x-auto relative">
 

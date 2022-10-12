@@ -23,6 +23,9 @@
                 <div class="space-y-4 lg:text-lg leading-loose">
                     <p><span class="font-bold">Price:</span> ${{$product->unit_price}}</p>
                 </div>
+
+                <x-product.categories :product="$product"/>
+
                 <div class="space-y-4 lg:text-lg leading-loose flex flex-col">
                     <p class="font-bold">Status:
                         @if($product->is_visible ==0)
@@ -36,6 +39,7 @@
                         @endif
                     </p>
                 </div>
+
                 <div class="space-y-4 lg:text-lg leading-loose">
                     <a href="{{url('admin/products/manager/edit/'.$product->title)}}" >
                         <span class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8">

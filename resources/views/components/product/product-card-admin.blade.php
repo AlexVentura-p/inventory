@@ -38,6 +38,8 @@
                     </div>
                 </div>
 
+                <x-product.rating rating="{{$product->rating}}"/>
+
                 <div class="flex items-center text-sm">
                     <div class="ml-3">
                         <h5 class="font-bold">Status: </h5>

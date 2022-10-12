@@ -13,6 +13,11 @@ class Product extends Model
 
     public $guarded = [];
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
     public function lineItems()
     {
         return $this->hasMany(LineItem::class);
@@ -20,6 +25,12 @@ class Product extends Model
 
     public function scopeFilter($query, array $filters)
     {
+        if($filters['category'] ?? false)
+        {
+            $query->whereHas('categories', function ($q){
+                $q->where('name','=',request('category'));
+            });
+        }
 
         if ($filters['search'] ?? false){
             $query->where('title','like','%'.request('search').'%');

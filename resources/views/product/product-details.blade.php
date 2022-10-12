@@ -21,9 +21,13 @@
                     <p>{{$product->description}}</p>
                 </div>
                 <div class="space-y-4 lg:text-lg leading-loose">
-                    <p><span class="text-3xl text-gray-900 dark:text-white">Price:</span> ${{$product->unit_price}}</p>
+                    <p><span class="font-bold">Price:</span> ${{$product->unit_price}}</p>
                 </div>
                 <x-product.categories :product="$product"/>
+
+                @if(!auth()->guest())
+                    <x-product.form.edit-rating :product="$product"/>
+                @endif
             </div>
         </article>
     </main>

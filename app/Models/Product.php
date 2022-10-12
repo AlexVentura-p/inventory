@@ -23,6 +23,11 @@ class Product extends Model
         return $this->hasMany(LineItem::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         if($filters['category'] ?? false)

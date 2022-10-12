@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Events\StoreRatingEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Rating;
@@ -13,12 +14,16 @@ class RatingController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'user_id' => ['required','numeric'],
-            'product_id' => ['required','numeric'],
+            'user_id' => ['numeric','required','unique:ratings,user_id,NULL,NULL,product_id,'.
+                request('product_id')],
+            'product_id' => ['numeric','required','unique:ratings,product_id,NULL,NULL,user_id,'.
+                request('user_id')],
             'rating' => ['required','numeric','min:0.01','max:5']
         ]);
 
-        Rating::create($attributes);
+        $rating = Rating::create($attributes);
+
+        StoreRatingEvent::dispatch($rating);
 
         return back()->withInput();
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\ProductManagerController;
 use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ Route::get('/',[HomeController::class,'index']);
 Route::get('products',[ProductController::class,'index']);
 Route::get('products/{product:title}',[ProductController::class,'productDetails']);
 
+Route::post('products/ratings/store',[RatingController::class,'store'])->middleware('auth');
 
 Route::middleware('admin')->group(function () {
 

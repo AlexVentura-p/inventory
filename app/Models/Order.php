@@ -10,11 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Order extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
+
+    public $guarded = [];
 
     public function customer() : BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
     public function lineItems() : HasMany

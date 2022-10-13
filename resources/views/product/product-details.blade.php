@@ -28,6 +28,16 @@
                 @if(!auth()->guest())
                     <x-product.form.edit-rating :product="$product"/>
                 @endif
+
+                <form method="post" action="{{url("cart/add")}}">
+                    @csrf
+                    <input hidden name="product_id" value="{{$product->id}}">
+                    <div class="flex">
+                        <x-product.form.submit-button name="Add to cart"/>
+                        <input type="number" name="quantity" value="0" min="1" step="1" class="ml-3  w-20 px-3 py-1.5 text-gray-700 rounded-lg border  border-blue-600 rounded">
+                    </div>
+                </form>
+
             </div>
         </article>
     </main>

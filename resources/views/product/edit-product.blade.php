@@ -2,7 +2,7 @@
     <x-product.form.basic-template url="{{ url('admin/products/edit/'.$product->id)}}">
         @csrf
         @method('PATCH')
-        <x-product.form.text name="title" value="{{$product->title}}" />
+        <x-product.form.text name="title" value="{{$product->title}} "/>
 
         <x-product.form.textarea name="description" value="{{$product->description}}"/>
 
@@ -24,6 +24,8 @@
         </div>
 
         <x-product.form.price name="unit_price" value="{{$product->unit_price}}" />
+
+        <x-product.form.image-input name="image"/>
 
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl border-gray-900 mb-4">
             <select name="is_visible"

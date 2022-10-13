@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('is_visible');
             $table->float('rating')->nullable();
             $table->float("unit_price");
+            $table->string('image')->nullable();
         });
     }
 

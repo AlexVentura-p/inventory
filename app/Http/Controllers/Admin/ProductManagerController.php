@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UploadProductImage;
 use App\Models\Product;
 use Illuminate\Validation\Rule;
 
@@ -21,10 +22,13 @@ class ProductManagerController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
-            'is_visible' => ['required','numeric']
+            'is_visible' => ['required','numeric'],
+            'image' => ['nullable','mimes:jpg,jpeg,png','max:2048']
         ]);
 
         Product::create($attributes);
+
+        UploadProductImage::dispatch(request()->get('title'));
 
         return redirect('admin/products/'.$attributes['title']);
     }
@@ -57,6 +61,7 @@ class ProductManagerController extends Controller
 
         $product->update($attributes);
 
+        UploadProductImage::dispatch(request()->get('title'));
 
         return redirect('admin/products/'.$attributes['title']);;
 

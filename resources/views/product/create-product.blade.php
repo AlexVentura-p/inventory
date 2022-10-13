@@ -1,5 +1,5 @@
 <x-base-layout>
-        <x-product.form.basic-template url="{{ url('admin/products/store') }}">
+        <x-product.form.basic-template url="{{ url('admin/products/store') }} ">
             @csrf
             <x-product.form.text name="title"/>
 
@@ -17,6 +17,9 @@
             </div>
 
             <x-product.form.price name="unit_price"/>
+
+
+            <x-product.form.image-input name="image"/>
 
             <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl border-gray-900 mb-4">
                 <select name="is_visible"

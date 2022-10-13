@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\OrderListController;
 use App\Http\Controllers\Admin\ProductManagerController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\RatingController;
@@ -47,6 +48,8 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/products/manager/edit/{product:title}',[ProductManagerController::class,'editForm']);
 
     Route::patch('admin/products/edit/{product}',[ProductManagerController::class,'edit']);
+
+    Route::get('orders',[OrderListController::class,'index']);
 
 });
 

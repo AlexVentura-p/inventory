@@ -11,7 +11,7 @@ class AdminProductController extends Controller
     public function index()
     {
 
-        return view('product.products-list-admin', [
+        return view('product.admin.products-list-admin', [
             'products' => Product::filter(request(['search', 'sortBy', 'minPrice', 'maxPrice','category']))
                 ->paginate(10),
             'categories' => Category::all()
@@ -21,7 +21,7 @@ class AdminProductController extends Controller
     public function productDetails(Product $product)
     {
 
-        return view('product.product-details-admin',[
+        return view('product.admin.product-details-admin',[
             'product' => $product
         ]);
 

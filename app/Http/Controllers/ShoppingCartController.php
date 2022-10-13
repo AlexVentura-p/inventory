@@ -16,7 +16,7 @@ class ShoppingCartController extends Controller
         if (!request()->session()->exists('items_list')){
             return redirect('products');
         }
-        //dd(request()->session()->get('items_list'));
+
         return view('cart.item-list',[
             'items_list' => request()->session()->get('items_list')
         ]);

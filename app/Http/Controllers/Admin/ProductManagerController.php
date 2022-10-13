@@ -12,7 +12,7 @@ class ProductManagerController extends Controller
 
     public function createForm()
     {
-        return view('product.create-product');
+        return view('product.admin.create-product');
     }
 
     public function store()
@@ -43,7 +43,7 @@ class ProductManagerController extends Controller
 
     public function editForm(Product $product)
     {
-        return view('product.edit-product',[
+        return view('product.admin.edit-product',[
             'product' => $product
         ]);
     }

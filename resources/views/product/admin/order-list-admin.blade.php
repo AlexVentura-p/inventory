@@ -4,30 +4,30 @@
         <table class="min-w-full">
             <thead class="border-b">
             <tr>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Order Id</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Customer Id</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Item count</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Subtotal</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Shipping</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Taxes</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Grand Total</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Grand Total in EUR</th>
-                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Created at</th>
+                <x-order.table.head-col name="Order Id"/>
+                <x-order.table.head-col name="Customer Id"/>
+                <x-order.table.head-col name="Item count"/>
+                <x-order.table.head-col name="Subtotal"/>
+                <x-order.table.head-col name="Shipping"/>
+                <x-order.table.head-col name="Taxes"/>
+                <x-order.table.head-col name="Grand Total"/>
+                <x-order.table.head-col name="Grand Total in EUR"/>
+                <x-order.table.head-col name="Created at"/>
             </tr>
             </thead>
 
             @foreach($orders as $order)
                 <tbody>
-                <tr class="border-b">
-                    <td class="text-base text-gray-900 font-light px-6 py-4 whitespace-nowrap font-bold">{{$order->id}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{$order->user_id}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{$order->item_count}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${{$order->sub_total}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${{$order->shipping}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${{$order->taxes}}</td>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">${{$order->grand_total}}</td>
-                    <x-eur-price :order="$order"/>
-                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{$order->created_at}}</td>
+                <tr class="border-b text-base text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    <x-order.table.body-col name="{{$order->id}}" class="font-bold"/>
+                    <x-order.table.body-col name="{{$order->user_id}}"/>
+                    <x-order.table.body-col name="{{$order->item_count}}"/>
+                    <x-order.table.body-col name="{{$order->sub_total}} USD"/>
+                    <x-order.table.body-col name="{{$order->shipping}} USD"/>
+                    <x-order.table.body-col name="{{$order->taxes}} USD"/>
+                    <x-order.table.body-col name="{{$order->grand_total}} USD"/>
+                    <x-order.table.body-col name="{{$converter->convert($order->grand_total)}} EUR"/>
+                    <x-order.table.body-col name="{{$order->created_at}}"/>
                 </tr>
                 </tbody>
             @endforeach

@@ -1,16 +1,22 @@
 <?php
 
-namespace App\Http\Services;
-
+namespace App\Http\Services\RateConverter;
 
 use Illuminate\Support\Facades\Http;
 
-class ExchangeRate
+class ConvertUsdToEur implements RateConverter
 {
-    public function convertUSDtoEUR($amount)
+    private $apiKey;
+
+    public function __construct()
+    {
+        $this->apiKey = Config('api_client_auth.EXCHANGE_RATE_TOKEN');
+    }
+
+    public function convert($amount)
     {
         $response = Http::withHeaders([
-            'apikey'=> Config('api_client_auth.EXCHANGE_RATE_TOKEN')
+            'apikey'=> $this->apiKey
         ])
             ->get('https://api.apilayer.com/exchangerates_data/convert',[
                 'amount' => $amount,

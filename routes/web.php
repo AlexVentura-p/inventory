@@ -8,7 +8,7 @@ use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ProductCustomerController;
 use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\ShoppingCart\ShoppingCartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,7 +29,7 @@ Route::get('products/{product:title}',[ProductCustomerController::class,'product
 
 Route::middleware('customer')->group(function () {
 
-    Route::post('cart/add',[ShoppingCartController::class,'add']);
+    Route::post('cart/add',[ShoppingCartController::class,'store']);
 
     Route::post('products/ratings/store',[RatingController::class,'store']);
 

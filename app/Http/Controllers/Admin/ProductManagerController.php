@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\UploadProductImage;
+use App\Jobs\OptimizeProductImage;
 use App\Models\Product;
 use Illuminate\Validation\Rule;
 
@@ -23,12 +23,23 @@ class ProductManagerController extends Controller
             'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
             'is_visible' => ['required','numeric'],
-            'image' => ['nullable','mimes:jpg,jpeg,png','max:2048']
+            'image' => ['nullable','mimes:jpg,jpeg,png','max:1024']
         ]);
 
-        Product::create($attributes);
+        $product = Product::create($attributes);
 
-        UploadProductImage::dispatch(request()->get('title'));
+        if (request()->hasFile('image'))
+        {
+            $path = request()->file('image')->storeAs(
+                'products',
+                $product->product_title.'.'.request()->file('image')->getClientOriginalExtension(),
+                'public'
+            );
+
+            $product = Product::where('title','=',$product->product_title);
+            $product->update(['image' => $path]);
+            OptimizeProductImage::dispatch($path);
+        }
 
         return redirect('admin/products/'.$attributes['title']);
     }
@@ -56,12 +67,25 @@ class ProductManagerController extends Controller
             'description' => ['required', 'string', 'max:255'],
             'unit_price' => ['required', 'numeric','min:0.01'],
             'type' => ['required'],
-            'is_visible' => ['required','numeric']
+            'is_visible' => ['required','numeric'],
+            'image' => ['nullable','mimes:jpg,jpeg,png','max:2024']
         ]);
 
         $product->update($attributes);
 
-        UploadProductImage::dispatch(request()->get('title'));
+        if (request()->hasFile('image'))
+        {
+            $path = request()->file('image')->storeAs(
+                'products',
+                $product->title.'.'.request()->file('image')->getClientOriginalExtension(),
+                'public'
+            );
+
+            $product = Product::where('title','=',$product->title);
+            $product->update(['image' => $path]);
+            OptimizeProductImage::dispatch($path);
+        }
+
 
         return redirect('admin/products/'.$attributes['title']);;
 

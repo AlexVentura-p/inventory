@@ -12,7 +12,7 @@ class ProductCustomerController extends Controller
     {
         return view('product.products-list', [
             'products' => Product::where('is_visible', '=', 1)
-                ->filter(request(['search', 'sortBy', 'minPrice', 'maxPrice']))
+                ->filter(request(['search', 'sortBy', 'minPrice', 'maxPrice','category']))
                 ->paginate(10),
             'categories' => Category::all()
         ]);

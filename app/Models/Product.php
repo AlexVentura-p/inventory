@@ -13,6 +13,11 @@ class Product extends Model
 
     public $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'title';
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);

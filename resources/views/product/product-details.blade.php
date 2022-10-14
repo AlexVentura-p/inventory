@@ -17,17 +17,19 @@
                 <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                     {{$product->title}}
                 </h2>
-                <div class="space-y-4 lg:text-lg leading-loose">
+                <div class="space-y-4 lg:text-lg leading-loose mb-4">
                     <p>{{$product->description}}</p>
                 </div>
-                <div class="space-y-4 lg:text-lg leading-loose">
+                <div class="space-y-4 lg:text-lg leading-loose mb-4">
                     <p><span class="font-bold">Price:</span> ${{$product->unit_price}}</p>
                 </div>
-                <x-product.categories :product="$product"/>
 
-                @if(!auth()->guest())
-                    <x-product.form.edit-rating :product="$product"/>
-                @endif
+                <x-product.categories :product="$product" class="mb-4"/>
+
+
+                <x-product.form.edit-rating :product="$product" class="mb-4"/>
+
+                <x-product.rating rating="{{$product->rating}}" class="text-lg ml-0 mb-4"/>
 
                 <form method="post" action="{{url("cart/add")}}">
                     @csrf

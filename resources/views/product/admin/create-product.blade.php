@@ -1,7 +1,20 @@
 <x-base-layout>
-        <x-product.form.basic-template url="{{ url('admin/products/store') }} ">
+        <x-product.form.basic-template url="{{ url('admin/products') }} ">
             @csrf
             <x-product.form.text name="title"/>
+
+
+            <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl border-gray-900 mb-4">
+                <select name="category"
+                        class="flex-1 appearance-none bg-transparent py-2 pl-3 pr-9 text-sm font-semibold " required>
+                    <option disabled selected>
+                        Category
+                    </option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <x-product.form.textarea name="description"/>
 

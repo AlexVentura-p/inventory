@@ -1,5 +1,5 @@
 <x-base-layout>
-    <x-product.form.basic-template url="{{ url('admin/products/edit/'.$product->id)}}">
+    <x-product.form.basic-template url="{{ url('admin/products/'.$product->title)}}">
         @csrf
         @method('PATCH')
         <x-product.form.text name="title" value="{{$product->title}} "/>

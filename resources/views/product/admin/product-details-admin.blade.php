@@ -18,16 +18,20 @@
                 <h2 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
                     {{$product->title}}
                 </h2>
-                <div class="space-y-4 lg:text-lg leading-loose">
+                <div class="space-y-4 lg:text-lg leading-loose mb-4">
                     <p>{{$product->description}}</p>
                 </div>
-                <div class="space-y-4 lg:text-lg leading-loose">
+                <div class="space-y-4 lg:text-lg leading-loose mb-4">
                     <p><span class="font-bold">Price:</span> ${{$product->unit_price}}</p>
                 </div>
 
-                <x-product.categories :product="$product"/>
+                <x-product.categories :product="$product" class="mb-4"/>
 
-                <div class="space-y-4 lg:text-lg leading-loose flex flex-col">
+                <x-product.rating rating="{{$product->rating}}" class="text-lg mb-4"/>
+
+                <x-product.form.edit-rating :product="$product" class="mb-4"/>
+
+                <div class="space-y-4 lg:text-lg leading-loose flex flex-col mb-4">
                     <p class="font-bold">Status:
                         @if($product->is_visible ==0)
                             <span class="transition-colors duration-300 font-semibold bg-red-200 hover:bg-red-300 rounded-full px-8">
@@ -42,7 +46,7 @@
                 </div>
 
                 <div class="space-y-4 lg:text-lg leading-loose">
-                    <a href="{{url('admin/products/manager/edit/'.$product->title)}}" >
+                    <a href="{{url('admin/products/'.$product->title.'/edit')}}" >
                         <span class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8">
                              Edit
                         </span>

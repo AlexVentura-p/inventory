@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
-use App\Http\Services\RateConverter\RateConverter;
+use App\Http\Controllers\Controller;
 use App\Models\LineItem;
-use App\Models\Order;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {

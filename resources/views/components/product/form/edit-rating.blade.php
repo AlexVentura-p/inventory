@@ -3,7 +3,9 @@
     <span class="font-bold">Leave rating:</span>
     <form method="POST" action="{{ url('products/ratings/store') }}">
         @csrf
-        <input hidden name="user_id" value="{{auth()->user()->id}}">
+        @if(!auth()->guest())
+            <input hidden name="user_id" value="{{auth()->user()->id}}">
+        @endif
         <input hidden name="product_id" value="{{$product->id}}">
         <ul class="gap-3 w-full inline-flex">
             <li>

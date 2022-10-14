@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminProductController;
-use App\Http\Controllers\Admin\OrderListController;
+use App\Http\Controllers\Admin\Order\OrderListController;
+use App\Http\Controllers\Admin\Product\ProductAdminController;
 use App\Http\Controllers\Admin\ProductManagerController;
-use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\ProductCustomerController;
 use App\Http\Controllers\Customer\RatingController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShoppingCartController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,36 +23,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index']);
-Route::get('products',[ProductController::class,'index']);
-Route::get('products/{product:title}',[ProductController::class,'productDetails']);
+Route::get('products',[ProductCustomerController::class,'index']);
+Route::get('products/{product:title}',[ProductCustomerController::class,'productDetails']);
 
 
-Route::middleware('auth')->group(function () {
-    Route::post('products/ratings/store',[RatingController::class,'store']);
+Route::middleware('customer')->group(function () {
+
     Route::post('cart/add',[ShoppingCartController::class,'add']);
+
+    Route::post('products/ratings/store',[RatingController::class,'store']);
+
     Route::get('cart',[ShoppingCartController::class,'index']);
+
     Route::post('order/store',[OrderController::class,'store']);
 });
 
 Route::middleware('admin')->group(function () {
 
-    Route::get('admin/products',[AdminProductController::class,'index']);
-
-    Route::get('admin/products/{product:title}',[AdminProductController::class,'productDetails']);
-
-    Route::post('admin/products/store',[ProductManagerController::class,'store']);
-
-    Route::get('admin/products/manager/create',[ProductManagerController::class,'createForm']);
-
-    Route::post('admin/products/delete/{product:title}',[ProductManagerController::class,'delete']);
-
-    Route::get('admin/products/manager/edit/{product:title}',[ProductManagerController::class,'editForm']);
-
-    Route::patch('admin/products/edit/{product}',[ProductManagerController::class,'edit']);
-
     Route::get('orders',[OrderListController::class,'index']);
 
-});
+    Route::resource('admin/products', ProductAdminController::class);
 
+});
 
 require __DIR__.'/auth.php';

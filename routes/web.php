@@ -45,5 +45,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('admin/products', ProductAdminController::class);
 
 });
-
+Route::get('test',function (){
+    return request('code');
+});
 require __DIR__.'/auth.php';

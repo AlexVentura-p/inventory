@@ -17,6 +17,7 @@ class OrderListController extends Controller
 
     public function index()
     {
+
         return view('product.admin.order-list-admin',[
             'converter' => $this->converter,
             'orders' => Order::paginate(2)

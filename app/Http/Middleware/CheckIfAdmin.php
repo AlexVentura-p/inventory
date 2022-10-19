@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CheckIfAdmin
 {
@@ -18,14 +19,19 @@ class CheckIfAdmin
     public function handle(Request $request, Closure $next)
     {
 
-        if(auth()->guest()){
-            abort(Response::HTTP_FORBIDDEN);
+        if(auth()->user()->exists){
+
+            if (auth()->user()->role == 'admin'){
+                return $next($request);
+            }
+
         }
 
-        if (auth()->user()->role != 'admin') {
-            abort(Response::HTTP_FORBIDDEN);
+        if (! $request->expectsJson()) {
+            abort(ResponseAlias::HTTP_FORBIDDEN);
         }
 
-        return $next($request);
+        return response(['message' => 'Unauthorized'],401);
+
     }
 }

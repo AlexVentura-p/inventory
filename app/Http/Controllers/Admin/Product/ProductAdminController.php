@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\OptimizetImage;
+use App\Jobs\OptimizeImage;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -131,7 +131,7 @@ class ProductAdminController extends Controller
 
             $product = Product::where('title','=',$product->title);
             $product->update(['image' => $path]);
-            OptimizetImage::dispatch($path);
+            OptimizeImage::dispatch($path);
         }
     }
 }

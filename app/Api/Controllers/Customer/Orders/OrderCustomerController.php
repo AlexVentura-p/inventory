@@ -11,9 +11,8 @@ class OrderCustomerController extends Controller
 {
     public function index()
     {
-        $customer = User::find(request()->user()->id);
-
-        return response($customer->orders);
+        return Order::where('user_id','=',request()->user()->id)
+            ->paginate(10);
     }
 
     public function show(Order $order)

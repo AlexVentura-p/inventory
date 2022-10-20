@@ -2,7 +2,7 @@
 
 namespace App\Http\Services\Images;
 
-use App\Jobs\OptimizetImage;
+use App\Jobs\OptimizeImage;
 
 class ImageFormService
 {
@@ -15,7 +15,7 @@ class ImageFormService
                 'public'
             );
 
-            OptimizetImage::dispatch($path);
+            OptimizeImage::dispatch($path);
 
             return $path;
         }

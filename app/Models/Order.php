@@ -17,7 +17,7 @@ class Order extends Model
     public $guarded = [];
 
 
-    public function customer() : BelongsTo
+    public function users() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -3,6 +3,8 @@
 namespace App\Api\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Jobs\OptimizeProductImage;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,33 +18,25 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        return response(Product::paginate(2),200);
+        return response(Product::paginate(10));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $attributes = request()->validate([
-            'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
-            'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric','min:0.01'],
-            'type' => ['required'],
-            'is_visible' => ['required','numeric'],
-            'image' => ['nullable','mimes:jpg,jpeg,png','max:2048'],
-            'category_id' => ['required']
-        ]);
+        $attributes = $request->validated();
 
         $categoryId = $attributes['category_id'];
         unset($attributes['category_id']);
 
-        $product = Product::create($attributes);
+        $attributes['image'] = $this->storeImage2('products', $attributes['title']);
 
-        //$this->storeImage($product);
+        $product = Product::create($attributes);
 
         $product->categories()->attach($categoryId);
 
@@ -52,7 +46,7 @@ class AdminProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -63,23 +57,25 @@ class AdminProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Product $product)
     {
         $attributes = request()->validate([
+            'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
             'description' => ['nullable', 'string', 'max:255'],
-            'unit_price' => ['nullable', 'numeric','min:0.01'],
+            'unit_price' => ['nullable', 'numeric', 'min:0.01'],
             'type' => ['nullable'],
-            'is_visible' => ['nullable','numeric'],
-            'image' => ['nullable','mimes:jpg,jpeg,png','max:2024']
+            'is_visible' => ['nullable', 'numeric'],
+            'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2024']
         ]);
+
+        $product->image = $this->storeImage2('products', $attributes['title']);
 
         $product->update($attributes);
 
-        //$this->storeImage($product);
 
         return response($product);
     }
@@ -87,13 +83,44 @@ class AdminProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
     {
-        Product::where('id','=',$product->id)->delete();
+        Product::where('id', '=', $product->id)->delete();
 
-        return response()->noContent();
+        return response('No Content', 204);
     }
+
+    private function storeImage(Product $product)
+    {
+        if (request()->hasFile('image')) {
+            $path = request()->file('image')->storeAs(
+                'products',
+                $product->title . '.' . request()->file('image')->getClientOriginalExtension(),
+                'public'
+            );
+
+            $product = Product::where('title', '=', $product->title);
+            $product->update(['image' => $path]);
+            OptimizeProductImage::dispatch($path);
+        }
+    }
+
+    private function storeImage2(string $folder, $imageTitle)
+    {
+        if (request()->hasFile('image')) {
+            $path = request()->file('image')->storeAs(
+                $folder,
+                $imageTitle . '.' . request()->file('image')->getClientOriginalExtension(),
+                'public'
+            );
+
+            OptimizeProductImage::dispatch($path);
+
+            return $path;
+        }
+    }
+
 }

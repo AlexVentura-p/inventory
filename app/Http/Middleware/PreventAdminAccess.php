@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class CheckIfCustomer
+class PreventAdminAccess
 {
     /**
      * Handle an incoming request.
@@ -19,25 +19,21 @@ class CheckIfCustomer
     public function handle(Request $request, Closure $next)
     {
 
-        if(! auth()->guest()){
+        //return response(Auth::user());
+        if(Auth::check()){
 
-            if (auth()->user()->role == 'customer'){
-                return $next($request);
+            if (auth()->user()->role == 'admin'){
+                if (! $request->expectsJson()) {
+                    abort(ResponseAlias::HTTP_FORBIDDEN);
+                }
+
+                return response(['message' => 'Unauthorized'],401);
             }
 
         }
 
-        if (! $request->expectsJson()) {
+        return $next($request);
 
-            if(auth()->guest()){
-                return redirect('login');
-            }
-
-            abort(ResponseAlias::HTTP_FORBIDDEN);
-        }
-
-
-        return response(['message' => 'Unauthorized'],401);
 
     }
 }

@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(RateConverter::class,function ($app){
+        $this->app->singleton(RateConverter::class,function ($app){
             return new ConvertUsdToEur();
         });
     }

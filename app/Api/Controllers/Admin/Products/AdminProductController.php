@@ -63,7 +63,22 @@ class AdminProductController extends Controller
     public function update(Product $product)
     {
         $attributes = request()->validate([
-            'title' => ['nullable', 'string', 'max:255',Rule::unique('products','title')],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'unit_price' => ['required', 'numeric', 'min:0.01'],
+            'type' => ['required'],
+            'is_visible' => ['required', 'numeric']
+        ]);
+
+        $product->update($attributes);
+
+        return response($product);
+    }
+
+    public function patch(Product $product)
+    {
+        $attributes = request()->validate([
+            'title' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:255'],
             'unit_price' => ['nullable', 'numeric', 'min:0.01'],
             'type' => ['nullable'],

@@ -28,11 +28,17 @@ Route::middleware('auth:api')->group(function () {
 //});
 
 Route::middleware(['auth:api', 'customer'])->group(function () {
-    Route::get('customer/orders', [OrderCustomerController::class, 'show']);
+    Route::get('customer/orders', [OrderCustomerController::class, 'index']);
+    Route::get('customer/orders/{order}', [OrderCustomerController::class, 'show']);
 });
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
-    Route::apiResource('admin/products', AdminProductController::class);
+    Route::apiResource('admin/products', AdminProductController::class)->except([
+        'update'
+    ]);
+    Route::put('admin/products/{product}',[AdminProductController::class,'update']);
+    Route::patch('admin/products/{product}',[AdminProductController::class,'update']);
+
 });
 
 

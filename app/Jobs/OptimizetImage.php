@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider;
 
-class OptimizeProductImage implements ShouldQueue
+class OptimizetImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

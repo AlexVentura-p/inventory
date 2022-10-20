@@ -4,9 +4,8 @@ namespace App\Api\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
-use App\Jobs\OptimizeProductImage;
+use App\Http\Services\Images\ImageFormService;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class AdminProductController extends Controller
@@ -34,7 +33,7 @@ class AdminProductController extends Controller
         $categoryId = $attributes['category_id'];
         unset($attributes['category_id']);
 
-        $attributes['image'] = $this->storeImage2('products', $attributes['title']);
+        $attributes['image'] = ImageFormService::store('products', $attributes['title']);
 
         $product = Product::create($attributes);
 
@@ -64,18 +63,14 @@ class AdminProductController extends Controller
     public function update(Product $product)
     {
         $attributes = request()->validate([
-            'title' => ['required', 'string', 'max:255',Rule::unique('products','title')],
+            'title' => ['nullable', 'string', 'max:255',Rule::unique('products','title')],
             'description' => ['nullable', 'string', 'max:255'],
             'unit_price' => ['nullable', 'numeric', 'min:0.01'],
             'type' => ['nullable'],
-            'is_visible' => ['nullable', 'numeric'],
-            'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2024']
+            'is_visible' => ['nullable', 'numeric']
         ]);
 
-        $product->image = $this->storeImage2('products', $attributes['title']);
-
         $product->update($attributes);
-
 
         return response($product);
     }
@@ -93,34 +88,5 @@ class AdminProductController extends Controller
         return response('No Content', 204);
     }
 
-    private function storeImage(Product $product)
-    {
-        if (request()->hasFile('image')) {
-            $path = request()->file('image')->storeAs(
-                'products',
-                $product->title . '.' . request()->file('image')->getClientOriginalExtension(),
-                'public'
-            );
-
-            $product = Product::where('title', '=', $product->title);
-            $product->update(['image' => $path]);
-            OptimizeProductImage::dispatch($path);
-        }
-    }
-
-    private function storeImage2(string $folder, $imageTitle)
-    {
-        if (request()->hasFile('image')) {
-            $path = request()->file('image')->storeAs(
-                $folder,
-                $imageTitle . '.' . request()->file('image')->getClientOriginalExtension(),
-                'public'
-            );
-
-            OptimizeProductImage::dispatch($path);
-
-            return $path;
-        }
-    }
 
 }

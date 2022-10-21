@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "bd250edd-11c8-4dff-9e0a-8dd64f9fa71d",
+		"name": "Week6 API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22841470"
+	},
+	"item": [
+		{
+			"name": "auth third party clients",
+			"item": [
+				{
+					"name": "OAuth Autorize",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/authorize?client_id=1&redirect_uri=http://localhost:8080/test&response_type=code&scope&state=asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "1"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8080/test"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "scope",
+									"value": null
+								},
+								{
+									"key": "state",
+									"value": "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "ogFaBaRR77YckQOzFYK7N6VLBh0njfzSkYiZNp1q",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8080/test",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "def5020017d97f1538842fbfc82d819d2ee88392780f4768e48993a2b483108b961d172f2bde38149674566c47273404a0fbe44e789b777fe2d42a624cf7a6c6b992c2e33ad887ad986b5b02c8f60bc974152e0104b9ca794d471bac469cc84ba4922509c5bb5101615460960848dfb936810910c3a025e1c757840dc4841a8b1b485516abc6daded4ef9c6a1532052f985715a381fec386dc41e17530e27e1c010015ddeb89652595ceb7d4667a6d2958de2a5a3460155441ee22bc2b95bf8e8e0d264c2e0f3396ed09422312d1322ba94f735ac1daec3dae2970a54b6b3d8f8eab2a12378030ba25b69c5ab1e9e17c98a4ce86246c9e56e4fb234dd8661a59d05eefde0efda606be4c4ac2df8254c49df00bb53b5d71faef4c2cbac64e057da6ebf58e663e274b84868c0c94b62bc64831433b0a8c3bf87065228fcd63a5f432868267135a809845a2cb00f2db3e138596a0057eb30b4cd1bf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "ogFaBaRR77YckQOzFYK7N6VLBh0njfzSkYiZNp1q",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8080/test",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "def502002d101d52c6b7e80fbcbb852eed0e4fc0c0b9b1cd1f230901dd740e4d05456c54fee1e44132c89dcd7ba997186496109731f366a04b80ba197fd15c511ab0450b3d3cd13eacc545a90075dbea8bee9b6dc914bc53df66ea729411619e5b65279e5cdffd08b84b858e58530083a3c80701bf2c8f6462b785a7fa00ad87dee4d69fa7de2dea259c9fda7f3d6b1bbf67681826a8debf457699b7513f09e4b6c82324d327bba468cc5aeadef83492de5a476af59c2d7725869f7fdc5ab12b97ff35e1ac3ad4495e6f80c1f5d0a2c612d16acc40c8620392cd9f77c1a86d6a5a1f4b1db22b6d1ba8c3f66d29a1f40416bedfdba8d64c8bc763dced0d7b27f19a6762cf799e737df9315e88e7b0da9a5324f5ecb7633eec5d0760964de8c6144ffdc41673bb70a942020923a48c7730dded62a47e94214bca93e8d9504b08e2986eeaa8f0f2365d30695e4cb13b735e826af38eadb5b2536ad7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "password grant first party clients",
+			"item": [
+				{
+					"name": "Token customer with password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "a3Z3xii834QWOU9MJgRNqqeOXnVLaQm3bPFa59bK",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "a@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token admin with password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "a3Z3xii834QWOU9MJgRNqqeOXnVLaQm3bPFa59bK",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "av@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authenticated User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/customer/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/customer/orders/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"orders",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "visible products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products?page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get product admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products/excepturi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products",
+						"excepturi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "ababab",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RegularProduct",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Brand new TV really expensive",
+							"type": "text"
+						},
+						{
+							"key": "unit_price",
+							"value": "8000",
+							"type": "text"
+						},
+						{
+							"key": "is_visible",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "category_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/xampp/htdocs/public_html/web2/Imagenes/pagina_principal/fondo9.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "_method",
+							"value": "PUT",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "ababab",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "DigitalProduct",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "zzzzzzz",
+							"type": "text"
+						},
+						{
+							"key": "unit_price",
+							"value": "7000",
+							"type": "text"
+						},
+						{
+							"key": "is_visible",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/xampp/htdocs/public_html/web2/Imagenes/pagina_principal/carga.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products/ababab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products",
+						"ababab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "_method",
+							"value": "PATCH",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "ababab",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "RegularProduct",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "asdfasdfasdf",
+							"type": "text"
+						},
+						{
+							"key": "unit_price",
+							"value": "45",
+							"type": "text"
+						},
+						{
+							"key": "is_visible",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/xampp/htdocs/public_html/web2/Imagenes/pagina_principal/fondo9.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products/ababab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products",
+						"ababab"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/products/ababab",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"products",
+						"ababab"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

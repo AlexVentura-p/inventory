@@ -31,7 +31,7 @@ class CheckIfAdmin
             abort(ResponseAlias::HTTP_FORBIDDEN);
         }
 
-        return response(['message' => 'Unauthorized'],401);
+        return response(['message' => 'Forbidden'],403);
 
     }
 }

@@ -17,15 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/products', [ProductCustomerController::class, 'show']);
+Route::get('user', [UserController::class, 'show'])->middleware('auth:api');
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('user', [UserController::class, 'show']);
-});
-
-//Route::middleware(['auth:api','no_admin_access:api'])->group(function () {
-//    Route::get('/products', [ProductCustomerController::class, 'show']);
-//});
+Route::get('/products', [ProductCustomerController::class, 'show'])
+    ->middleware('no_admin_access');
 
 Route::middleware(['auth:api', 'customer'])->group(function () {
     Route::get('customer/orders', [OrderCustomerController::class, 'index']);
@@ -33,11 +28,12 @@ Route::middleware(['auth:api', 'customer'])->group(function () {
 });
 
 Route::middleware(['auth:api', 'admin'])->group(function () {
+
     Route::apiResource('admin/products', AdminProductController::class)->except([
         'update'
     ]);
     Route::put('admin/products/{product}',[AdminProductController::class,'update']);
-    Route::patch('admin/products/{product}',[AdminProductController::class,'update']);
+    Route::patch('admin/products/{product}',[AdminProductController::class,'patch']);
 
 });
 

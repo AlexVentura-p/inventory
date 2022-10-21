@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class PreventAdminAccess
+class PreventAdminAccessApi
 {
     /**
      * Handle an incoming request.
@@ -19,21 +19,26 @@ class PreventAdminAccess
     public function handle(Request $request, Closure $next)
     {
 
-        //return response(Auth::user());
-        if(Auth::check()){
+        if(Auth::guard('api')->check()){
 
-            if (auth()->user()->role == 'admin'){
-                if (! $request->expectsJson()) {
-                    abort(ResponseAlias::HTTP_FORBIDDEN);
-                }
+            if ($request->user('api')->role == 'admin'){
 
-                return response(['message' => 'Unauthorized'],401);
+                return $this->invalidAccesResponse($request);
+
             }
-
         }
 
         return $next($request);
 
-
     }
+
+    private function invalidAccesResponse(Request $request)
+    {
+        if (!$request->expectsJson()) {
+            abort(ResponseAlias::HTTP_FORBIDDEN);
+        }
+
+        return response(['message' => 'Forbidden'],403);
+    }
+
 }

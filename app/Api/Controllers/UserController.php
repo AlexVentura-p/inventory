@@ -11,8 +11,7 @@ class UserController extends Controller
     {
         if (request()->user()->exists) {
             return response(
-                UserResource::make(request()->user()),
-                201
+                UserResource::make(request()->user())
             );
         }
 

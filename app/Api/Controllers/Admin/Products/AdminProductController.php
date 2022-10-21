@@ -3,7 +3,9 @@
 namespace App\Api\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\PatchProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Services\Images\ImageFormService;
 use App\Models\Product;
 use Illuminate\Validation\Rule;
@@ -39,13 +41,12 @@ class AdminProductController extends Controller
 
         $product->categories()->attach($categoryId);
 
-        return response($product);
+        return response($product,201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -57,33 +58,28 @@ class AdminProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Product $product)
+    public function update(Product $product, UpdateProductRequest $request)
     {
-        $attributes = request()->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:255'],
-            'unit_price' => ['required', 'numeric', 'min:0.01'],
-            'type' => ['required'],
-            'is_visible' => ['required', 'numeric']
-        ]);
+        $attributes = $request->validated();
+
+        $attributes['image'] = ImageFormService::store('products', $attributes['title']);
 
         $product->update($attributes);
 
         return response($product);
     }
 
-    public function patch(Product $product)
+    public function patch(Product $product, PatchProductRequest $request)
     {
-        $attributes = request()->validate([
-            'title' => ['nullable', 'string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:255'],
-            'unit_price' => ['nullable', 'numeric', 'min:0.01'],
-            'type' => ['nullable'],
-            'is_visible' => ['nullable', 'numeric']
-        ]);
+        $attributes = $request->validated();
+
+        $title = $attributes['title'] ?? false ? $attributes['title'] : $product->title;
+
+        if($attributes['image'] ?? false){
+            $attributes['image'] = ImageFormService::store('products', $title);
+        }
 
         $product->update($attributes);
 
@@ -93,7 +89,6 @@ class AdminProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)

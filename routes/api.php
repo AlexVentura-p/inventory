@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/products', [ProductCustomerController::class, 'show']);
-
 Route::get('user', [UserController::class, 'show'])->middleware('auth:api');
+
+Route::get('/products', [ProductCustomerController::class, 'show'])
+    ->middleware('no_admin_access');
 
 Route::middleware(['auth:api', 'customer'])->group(function () {
     Route::get('customer/orders', [OrderCustomerController::class, 'index']);

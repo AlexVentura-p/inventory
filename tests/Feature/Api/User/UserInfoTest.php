@@ -10,36 +10,37 @@ use Tests\TestCase;
 class UserInfoTest extends TestCase
 {
     /**
-     * A basic feature test example.
      *
      * @return void
      */
-    public function test_only_authenticated_user_can_get_profile_info()
+    public function test_unauthenticated_user_can_not_get_profile_info()
     {
+        $response = $this->getJson('/api/user');
 
-        $guestResponse = $this->getJson('/api/user');
+        $response->assertStatus(401);
+    }
 
-        $customer = Passport::actingAs(
-            User::factory()->create(['role' => 'customer',]),
+    /**
+     * @dataProvider  rolesData
+     */
+    public function test_authenticated_user_can_get_profile_info($role)
+    {
+        $user = Passport::actingAs(
+            User::factory()->create(['role' => $role,]),
             ['api']
         );
 
-        $admin = Passport::actingAs(
-            User::factory()->create(['role' => 'admin',]),
-            ['api']
-        );
-
-
-        $customerResponse = $this->actingAs($customer)
+        $response = $this->actingAs($user)
             ->getJson('/api/user');
 
-        $adminResponse = $this->actingAs($admin)
-            ->getJson('/api/user');
+        $response->assertStatus(200);
+    }
 
-
-
-        $guestResponse->assertStatus(401);
-        $customerResponse->assertStatus(200);
-        $adminResponse->assertStatus(200);
+    public function rolesData(): array
+    {
+        return [
+            ['admin'],
+            ['customer']
+        ];
     }
 }

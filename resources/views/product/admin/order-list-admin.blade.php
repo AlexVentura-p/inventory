@@ -26,7 +26,8 @@
                     <x-order.table.body-col name="{{$order->shipping}} USD"/>
                     <x-order.table.body-col name="{{$order->taxes}} USD"/>
                     <x-order.table.body-col name="{{$order->grand_total}} USD"/>
-                    <x-order.table.body-col name="{{$converter->convert($order->grand_total)}} EUR"/>
+                    @php($total_converted = $converter->convert($order->grand_total))
+                    <x-order.table.body-col name="{{$total_converted['amount'].' '.$total_converted['currency']}}"/>
                     <x-order.table.body-col name="{{$order->created_at}}"/>
                 </tr>
                 </tbody>

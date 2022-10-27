@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Throwable;
@@ -22,29 +23,28 @@ class OrderTest extends TestCase
      */
     public function test_only_my_orders_are_visible()
     {
-        $userTest = Passport::actingAs(
-            User::factory()->create(['role' => 'customer',]),
-            ['api']
-        );
 
-        Order::factory(5)->create([
-            'user_id' => $userTest->id
+        User::factory(2)
+            ->has(Order::factory()->count(5))
+            ->create([
+            'role'=>'customer'
         ]);
 
-        $userTwo = Passport::actingAs(
-            User::factory()->create(['role' => 'customer',]),
-            ['api']
-        );
+        $userTest = User::factory()
+            ->has(Order::factory()->count(3))
+            ->create([
+                'role'=>'customer'
+            ]);
 
-        Order::factory(3)->create([
-            'user_id' => $userTwo->id
-        ]);
+        Passport::actingAs($userTest);
 
+        $response = $this->getJson('/api/customer/orders');
+        $data = $response->decodeResponseJson()['data'];
+        $userIdCollection = array_column($data, 'user_id');
 
-        $response = $this->actingAs($userTest)->getJson('/api/customer/orders');
-        $array = $response->decodeResponseJson()['data'];
-        $userIdCollection = array_column($array, 'user_id');
+        $this->assertEquals([$userTest->id], array_unique($userIdCollection));
 
-        $this->assertCount(1, array_unique($userIdCollection));
     }
+
+
 }

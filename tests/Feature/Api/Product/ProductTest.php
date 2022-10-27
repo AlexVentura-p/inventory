@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -46,18 +47,15 @@ class ProductTest extends TestCase
 
         $response = $this->getJson('/api/products');
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
     }
 
     public function test_created_product_is_return()
     {
         $category = Category::factory()->create();
         $file = UploadedFile::fake()->image('image.jpg');
-
-        Passport::actingAs(
-            User::factory()->create(['role' => 'admin',]),
-            ['api']
-        );
+        Queue::fake();
+        $this->withoutMiddleware();
 
         $response = $this->withHeader(
             'Accept',
@@ -71,7 +69,6 @@ class ProductTest extends TestCase
             'image' => $file,
             'category_id' => $category->id
         ]);
-
 
         $response
             ->assertJson([
@@ -88,12 +85,13 @@ class ProductTest extends TestCase
     {
         $category = Category::factory()->create();
         $file = UploadedFile::fake()->image('image.jpg');
-        $admin = Passport::actingAs(
+        Passport::actingAs(
             User::factory()->create(['role' => 'admin',]),
             ['api']
         );
+        Queue::fake();
 
-        $response = $this->actingAs($admin)->withHeader(
+        $response = $this->withHeader(
             'Accept',
             'application/json'
         )->post('api/admin/products',[
@@ -106,7 +104,7 @@ class ProductTest extends TestCase
             'category_id' => $category->id
         ]);
 
-        $response->assertStatus(201);
+        $response->assertCreated();
 
     }
 
@@ -122,8 +120,7 @@ class ProductTest extends TestCase
             'application/json'
         )->post('api/admin/products');
 
-
-        $customerResponse->assertStatus(403);
+        $customerResponse->assertForbidden();
 
     }
 
@@ -135,7 +132,7 @@ class ProductTest extends TestCase
         )->post('api/admin/products');
 
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
 
     }
 

@@ -3,12 +3,14 @@
 namespace Api\User;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class UserInfoTest extends TestCase
 {
+    use DatabaseTransactions;
     /**
      *
      * @return void
@@ -17,7 +19,7 @@ class UserInfoTest extends TestCase
     {
         $response = $this->getJson('/api/user');
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 
     /**
@@ -33,7 +35,7 @@ class UserInfoTest extends TestCase
         $response = $this->actingAs($user)
             ->getJson('/api/user');
 
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     public function rolesData(): array

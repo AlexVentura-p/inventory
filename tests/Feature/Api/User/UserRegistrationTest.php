@@ -29,4 +29,33 @@ class UserRegistrationTest extends TestCase
         $this->assertAuthenticated();
     }
 
+    /**
+    * @dataProvider rolesData
+     */
+    public function test_authenticated_user_can_not_register($role)
+    {
+        Passport::actingAs(User::factory()->create([
+            'role' => $role
+        ]));
+
+        $response = $this->post('/register', [
+            'first_name' => 'juan',
+            'last_name' => 'perez',
+            'email' => 'juan@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertRedirect();
+
+    }
+
+    public function rolesData(): array
+    {
+        return [
+            ['admin'],
+            ['customer']
+        ];
+    }
+
 }

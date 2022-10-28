@@ -38,7 +38,7 @@ Route::middleware('customer')->group(function () {
     Route::post('order/store',[OrderController::class,'store']);
 });
 
-Route::middleware('admin')->group(function () {
+Route::middleware(['auth','admin'])->group(function () {
 
     Route::get('orders',[OrderListController::class,'index']);
 

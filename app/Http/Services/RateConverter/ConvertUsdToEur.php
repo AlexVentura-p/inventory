@@ -24,6 +24,9 @@ class ConvertUsdToEur implements RateConverter
                 'to' => 'EUR'
             ]);
 
-        return $response->json('result');
+        return [
+            'amount' => $response->json('result'),
+            'currency'=>'EUR'
+        ];
     }
 }

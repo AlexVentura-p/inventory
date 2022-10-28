@@ -13,6 +13,7 @@ use Tests\TestCase;
 class UserRegistrationTest extends TestCase
 {
     use DatabaseTransactions;
+
     /**
      *
      * @return void
@@ -31,13 +32,16 @@ class UserRegistrationTest extends TestCase
     }
 
     /**
-    * @dataProvider rolesData
+     * @dataProvider rolesData
      */
     public function test_authenticated_user_can_not_register($role)
     {
-        Passport::actingAs(User::factory()->create([
-            'role' => $role
-        ]));
+        Passport::actingAs(
+            User::factory()->create([
+                'email' => 'juan@gmail.com',
+                'role' => $role
+            ])
+        );
 
         $response = $this->post('/register', [
             'first_name' => 'juan',
@@ -48,7 +52,7 @@ class UserRegistrationTest extends TestCase
         ]);
 
         $response->assertRedirect();
-
+        $this->assertCount(1, User::where('email', '=', 'juan@gmail.com')->get());
     }
 
     public function rolesData(): array

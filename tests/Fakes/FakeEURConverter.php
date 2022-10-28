@@ -9,7 +9,7 @@ class FakeEURConverter implements RateConverter
     public function convert($amount)
     {
         return [
-            'amount' => 100,
+            'amount' => $amount +1,
             'currency' => 'EUR'
         ];
     }

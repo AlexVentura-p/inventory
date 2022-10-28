@@ -31,7 +31,7 @@ class OrderDetailTest extends TestCase
      * @return void
      * @throws \Throwable
      */
-    public function test_order_endpoint_gets_usd_and_eur_totals()
+    public function test_order_detail_endpoint_for_user_gets_usd_and_eur_totals()
     {
         $user = Passport::actingAs(
             User::factory()->create([
@@ -50,32 +50,9 @@ class OrderDetailTest extends TestCase
 
         $response->assertJsonFragment([
             'grand total USD' =>90,
-            'grand total EUR' =>100
+            'grand total EUR' =>91
         ]);
     }
 
-    public function test_order_view_displays_usd_and_eur()
-    {
-        $user = Passport::actingAs(
-            User::factory()->create([
-                'role' => 'customer'
-            ])
-        );
 
-        Order::factory()->create([
-            'user_id' => $user->id,
-            'grand_total' => 90
-        ]);
-
-        $admin = Passport::actingAs(
-            User::factory()->create([
-                'role' => 'admin'
-            ])
-        );
-
-        $response = $this->actingAs($admin)->get('orders/');
-
-        $response->assertSeeText('90 USD');
-        $response->assertSeeText('100 EUR');
-    }
 }

@@ -7,8 +7,8 @@ use App\Http\Requests\Product\PatchProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Services\Images\ImageFormService;
+use App\Http\Services\Product\ProductService;
 use App\Models\Product;
-use Illuminate\Validation\Rule;
 
 class AdminProductController extends Controller
 {
@@ -41,7 +41,7 @@ class AdminProductController extends Controller
 
         $product->categories()->attach($categoryId);
 
-        return response($product,201);
+        return response($product, 201);
     }
 
     /**
@@ -77,7 +77,7 @@ class AdminProductController extends Controller
 
         $title = $attributes['title'] ?? false ? $attributes['title'] : $product->title;
 
-        if($attributes['image'] ?? false){
+        if ($attributes['image'] ?? false) {
             $attributes['image'] = ImageFormService::store('products', $title);
         }
 
@@ -99,4 +99,11 @@ class AdminProductController extends Controller
     }
 
 
+    public function import()
+    {
+
+        return response(
+            ProductService::import(request()->file('products'))
+        );
+    }
 }

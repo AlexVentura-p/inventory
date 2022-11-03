@@ -34,6 +34,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     ]);
     Route::put('admin/products/{product}',[AdminProductController::class,'update']);
     Route::patch('admin/products/{product}',[AdminProductController::class,'patch']);
+    Route::post('admin/products/import',[AdminProductController::class,'import']);
 
 });
 

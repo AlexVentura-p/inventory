@@ -2,15 +2,11 @@
 
 namespace Tests\Feature\Api\Product;
 
-use App\Http\Resources\ProductCollection;
-use App\Http\Resources\ProductResource;
+use App\Http\Requests\Product\ImportProductsRequest;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -38,12 +34,15 @@ class ImportProductTest extends TestCase
                 'role' => $role
             ])
         );
-        $file = new UploadedFile(
+        $storageFile = new UploadedFile(
             base_path('storage/Test/JsonFilesTest/products.json'),
             'products.json'
         );
 
-        $response = $this->post('api/admin/products/import', [
+        $file = UploadedFile::fake()
+            ->createWithContent('products.json',$storageFile->getContent());
+
+        $response = $this->post('api/admin/products/import',[
             'products' => $file
         ]);
 
@@ -61,20 +60,21 @@ class ImportProductTest extends TestCase
 
     public function test_import_endpoint_can_parse_json()
     {
-        $file = new UploadedFile(
+        $storageFile = new UploadedFile(
             base_path('storage/Test/JsonFilesTest/products.json'),
             'products.json'
         );
 
+        $testFile = UploadedFile::fake()
+            ->createWithContent('products.json',$storageFile->getContent());
+
         $this->withoutMiddleware();
 
-
         $response = $this->withHeaders([
-            'Content-Type' => 'multipart/form-data',
             'Accept' => 'application/json'
         ])
             ->post('api/admin/products/import', [
-                'products' => $file
+                'products' => $testFile
             ]);
 
         $products = Product::all()->toArray();
@@ -84,16 +84,19 @@ class ImportProductTest extends TestCase
 
     public function test_import_endpoint_can_parse_csv()
     {
-        $file = new UploadedFile(
+        $storageFile = new UploadedFile(
             base_path('storage/Test/CsvFilesTest/products.csv'),
             'products.csv'
         );
+
+        $testFile = UploadedFile::fake()
+            ->createWithContent('products.csv',$storageFile->getContent());
 
         $this->withoutMiddleware();
 
         $response = $this->withHeader('Content-Type', 'multipart/form-data')
             ->post('api/admin/products/import', [
-                'products' => $file
+                'products' => $testFile
             ]);
 
         $products = Product::all()->toArray();

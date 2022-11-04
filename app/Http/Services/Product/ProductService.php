@@ -27,6 +27,12 @@ class ProductService
 
         $products = $this->parser->parse($file);
 
+        foreach ($products as $product){
+            if (Product::where('title','=',$product->title)->exists()){
+                return ['message' => $product->title . ' already in database'];
+            }
+        }
+
         return array_map(function ($product) {
             return self::store($product);
         }, $products);

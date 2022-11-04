@@ -3,6 +3,7 @@
 namespace App\Api\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\ImportProductsRequest;
 use App\Http\Requests\Product\PatchProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
@@ -10,6 +11,7 @@ use App\Http\Services\Images\ImageFormService;
 use App\Http\Services\Product\FileParser\ParserFactory;
 use App\Http\Services\Product\ProductService;
 use App\Models\Product;
+use App\Rules\ImportExtensionRule;
 
 class AdminProductController extends Controller
 {
@@ -102,6 +104,9 @@ class AdminProductController extends Controller
 
     public function import(ProductService $productService)
     {
+        request()->validate([
+            'products' => ['bail','required', new ImportExtensionRule('products')]
+        ]);
 
         $file = request()->file('products');
 
@@ -110,7 +115,7 @@ class AdminProductController extends Controller
         );
 
         return response(
-            $productService->import(request()->file('products'))
+            $productService->import($file)
         );
     }
 }

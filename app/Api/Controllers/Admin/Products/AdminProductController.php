@@ -7,6 +7,7 @@ use App\Http\Requests\Product\PatchProductRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Services\Images\ImageFormService;
+use App\Http\Services\Product\FileParser\ParserFactory;
 use App\Http\Services\Product\ProductService;
 use App\Models\Product;
 
@@ -101,6 +102,13 @@ class AdminProductController extends Controller
 
     public function import(ProductService $productService)
     {
+
+        $file = request()->file('products');
+
+        $productService->setParser(
+            ParserFactory::getParser($file->getClientOriginalExtension())
+        );
+
         return response(
             $productService->import(request()->file('products'))
         );

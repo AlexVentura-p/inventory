@@ -14,11 +14,16 @@ class ProductService
 {
     private Parser $parser;
 
+    /**
+     * @param Parser $parser
+     */
+    public function setParser(Parser $parser): void
+    {
+        $this->parser = $parser;
+    }
+
     public function import(UploadedFile $file): array
     {
-        $extension = ($file->getClientOriginalExtension());
-
-        $this->parser = ParserFactory::getParser($extension);
 
         $products = $this->parser->parse($file);
 

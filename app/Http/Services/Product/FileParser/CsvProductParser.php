@@ -9,19 +9,17 @@ use Illuminate\Http\UploadedFile;
 class CsvProductParser implements Parser
 {
 
-    function parse(UploadedFile $file)
+    public function parse(UploadedFile $file)
     {
-
-        $csvData = str_getcsv($file->getContent(),"\n");
-        $headers = explode(',',array_shift($csvData));
+        $csvData = str_getcsv($file->getContent(), "\n");
+        $headers = explode(',', array_shift($csvData));
 
         $products = [];
 
         foreach ($csvData as $product) {
-            $product = explode(',',$product);
-            $products[] = new Product(array_combine($headers,$product));
+            $product = explode(',', $product);
+            $products[] = new Product(array_combine($headers, $product));
         }
-
 
         return $products;
     }

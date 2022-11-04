@@ -31,7 +31,7 @@ class ImportProductTest extends TestCase
      * @return void
      * @dataProvider  rolesData
      */
-    public function test_import_product_endpoint_access_for_authenticated_users($role,$result)
+    public function test_import_product_endpoint_access_for_authenticated_users($role, $result)
     {
         Passport::actingAs(
             User::factory()->create([
@@ -44,8 +44,8 @@ class ImportProductTest extends TestCase
         );
 
         $response = $this->post('api/admin/products/import', [
-                'products' => $file
-            ]);
+            'products' => $file
+        ]);
 
         $response->assertStatus($result);
     }
@@ -53,11 +53,10 @@ class ImportProductTest extends TestCase
     public function rolesData(): array
     {
         return [
-            ['admin',200],
-            ['customer',403]
+            ['admin', 200],
+            ['customer', 403]
         ];
     }
-
 
 
     public function test_import_endpoint_can_parse_json()
@@ -71,7 +70,7 @@ class ImportProductTest extends TestCase
 
 
         $response = $this->withHeaders([
-            'Content-Type'=> 'multipart/form-data',
+            'Content-Type' => 'multipart/form-data',
             'Accept' => 'application/json'
         ])
             ->post('api/admin/products/import', [
@@ -81,7 +80,6 @@ class ImportProductTest extends TestCase
         $products = Product::all()->toArray();
 
         $response->assertExactJson($products);
-
     }
 
     public function test_import_endpoint_can_parse_csv()

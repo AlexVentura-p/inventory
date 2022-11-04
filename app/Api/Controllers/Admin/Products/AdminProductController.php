@@ -99,11 +99,10 @@ class AdminProductController extends Controller
     }
 
 
-    public function import()
+    public function import(ProductService $productService)
     {
-
         return response(
-            ProductService::import(request()->file('products'))
+            $productService->import(request()->file('products'))
         );
     }
 }

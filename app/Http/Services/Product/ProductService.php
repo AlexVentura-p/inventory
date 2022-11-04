@@ -4,30 +4,27 @@ namespace App\Http\Services\Product;
 
 use App\Http\Services\Product\FileParser\CsvProductParser;
 use App\Http\Services\Product\FileParser\JsonProductParser;
-use App\Http\Services\Product\FileParser\ProductFileParser;
+use App\Http\Services\Product\FileParser\Parser;
+use App\Http\Services\Product\FileParser\ParserFactory;
 use App\Models\Product;
 use Illuminate\Http\UploadedFile;
+use phpDocumentor\Reflection\Types\This;
 
 class ProductService
 {
-    public static function import(UploadedFile $file) : array
+    private Parser $parser;
+
+    public function import(UploadedFile $file): array
     {
         $extension = ($file->getClientOriginalExtension());
 
-        $products= [];
+        $this->parser = ParserFactory::getParser($extension);
 
-        if ($extension == 'json'){
-            $products = ProductFileParser::parse(new JsonProductParser(),$file);
-        }
+        $products = $this->parser->parse($file);
 
-        if ($extension == 'csv'){
-            $products = ProductFileParser::parse(new CsvProductParser(),$file);
-        }
-
-        return array_map(function ($product){
+        return array_map(function ($product) {
             return self::store($product);
-        },$products);
-
+        }, $products);
     }
 
     public function store(Product $product): Product
@@ -36,4 +33,5 @@ class ProductService
         $product->save();
         return $product;
     }
+
 }

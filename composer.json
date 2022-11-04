@@ -15,7 +15,8 @@
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "spatie/laravel-image-optimizer": "^1.6"
+        "spatie/laravel-image-optimizer": "^1.6",
+      "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
@@ -25,8 +26,7 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10",
-      "ext-json": "*"
+        "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
         "psr-4": {

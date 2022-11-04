@@ -1,0 +1,34 @@
+{
+    "products": [
+        {
+            "title": "itaque",
+            "type": "DigitalProduct",
+            "description": "Dignissimos minus ut quaerat adipisci vero. Necessitatibus laboriosam eos fuga.",
+            "unit_price": 247
+        },
+        {
+            "title": "consectetur",
+            "type": "DigitalProduct",
+            "description": "Aut ratione in atque eligendi repellendus ad voluptas. Et sit officiis vero animi sapiente beatae.",
+            "unit_price": 67
+        },
+        {
+            "title": "quidem",
+            "type": "DigitalProduct",
+            "description": "Ab accusamus eaque ut ad eum. Ipsa non sed cumque ad vel omnis.",
+            "unit_price": 446
+        },
+        {
+            "title": "fugiat",
+            "type": "DigitalProduct",
+            "description": "Ullam qui est molestiae aut sequi velit. Earum vel dolores eius nam enim eaque excepturi.",
+            "unit_price": 314
+        },
+        {
+            "title": "dolorem",
+            "type": "DigitalProduct",
+            "description": "Eligendi quae magnam incidunt corporis aut impedit. Corporis dolorem quos cum incidunt repellat.",
+            "unit_price": 9
+        }
+    ]
+}

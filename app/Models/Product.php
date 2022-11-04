@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\DB;
 class Product extends Model
 {
     use HasFactory;
+
+    public $attributes = [
+        'image' => null,
+        'rating' => null
+    ];
+
     public $timestamps = false;
 
     public $guarded = [];
+
+    protected function setUnitPriceAttribute($value)
+    {
+        $this->attributes['unit_price'] = (double)($value);
+    }
 
     public function getRouteKeyName()
     {

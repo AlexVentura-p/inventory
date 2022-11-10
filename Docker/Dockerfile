@@ -11,6 +11,9 @@ WORKDIR /var/www
 
 RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mysql
 
+RUN php artisan storage:link
+RUN chown -R www-data:www-data storage
+
 FROM nginx:1.19-alpine as nginx
 RUN rm /etc/nginx/conf.d/default.conf
 

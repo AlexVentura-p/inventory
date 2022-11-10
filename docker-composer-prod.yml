@@ -7,6 +7,8 @@ services:
       dockerfile: Docker/Dockerfile
       target: php
     container_name: inventory-app
+    env_file:
+      - .env.pro
     restart: always
     working_dir: /var/www/
   nginx:
@@ -15,12 +17,17 @@ services:
       dockerfile: Docker/Dockerfile
       target: nginx
     container_name: inventory-nginx
+    env_file:
+      - .env.pro
     restart: always
+    working_dir: /var/www
     ports:
       - "8080:80"
   mysql:
     image: mysql:8.0.31
     container_name: inventory-mysql
+    env_file:
+      - .env.pro
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}

@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->float("shipping")->default(0.0);
             $table->float("taxes")->default(0.0);;
             $table->float("grand_total")->default(0.0);
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

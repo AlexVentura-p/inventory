@@ -4,17 +4,19 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Docker/Dockerfile
+      dockerfile: Docker/prod.Dockerfile
       target: php
     container_name: inventory-app
     env_file:
       - .env.pro
     restart: always
-    working_dir: /var/www/
+    working_dir: /var/www
+    volumes:
+      - app-data:/var/www
   nginx:
     build:
       context: ./
-      dockerfile: Docker/Dockerfile
+      dockerfile: Docker/prod.Dockerfile
       target: nginx
     container_name: inventory-nginx
     env_file:
@@ -23,8 +25,10 @@ services:
     working_dir: /var/www
     ports:
       - "8080:80"
+    volumes:
+      - app-data:/var/www
   mysql:
-    image: mysql:8.0.31
+    image: mysql:8.0
     container_name: inventory-mysql
     env_file:
       - .env.pro
@@ -37,6 +41,8 @@ services:
       - mysql-data:/var/lib/mysql
 volumes:
   mysql-data:
+    driver: local
+  app-data:
     driver: local
 
 

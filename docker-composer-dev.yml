@@ -3,34 +3,35 @@ version: '3.8'
 services:
   app:
     build:
-      context: ..
-      dockerfile: Docker/Dockerfile
-    container_name: inventory-app
+      context: ./
+      dockerfile: Docker/dev.Dockerfile
+      target: php
+    container_name: inventory-app-dev
     restart: always
     working_dir: /var/www/
     volumes:
       - ./:/var/www/
   nginx:
     image: nginx:1.19-alpine
-    container_name: inventory-nginx
+    container_name: inventory-nginx-dev
     restart: always
     ports:
       - "8080:80"
     volumes:
       - ./:/var/www/
-      - ./nginx:/etc/nginx/conf.d
+      - ./Docker/nginx-files:/etc/nginx/conf.d
   mysql:
-    image: mysql:8.0.31
-    container_name: inventory-mysql
+    image: mysql:8.0
+    container_name: inventory-mysql-dev
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
     ports:
       - "${DB_PORT}:3306"
     volumes:
-      - mysql-data:var/lib/msql
+      - mysql-data-dev:/var/lib/mysql
 volumes:
-  mysql-data:
+  mysql-data-dev:
     driver: local
 
 

@@ -21,7 +21,7 @@ class ProductCreateTest extends TestCase
     public function test_created_product_is_return()
     {
         $category = Category::factory()->create();
-        $file = UploadedFile::fake()->image('image.jpg');
+        $file = UploadedFile::fake()->image('image.png');
         Queue::fake();
         $this->withoutMiddleware();
 
@@ -45,14 +45,14 @@ class ProductCreateTest extends TestCase
                 "unit_price" => 100,
                 "type" => "DigitalProduct",
                 "is_visible" => 1,
-                "image" => "products/testProduct.jpg",
+                "image" => "products/testProduct.png",
             ]);
     }
 
     public function test_admin_can_create_product()
     {
         $category = Category::factory()->create();
-        $file = UploadedFile::fake()->image('image.jpg');
+        $file = UploadedFile::fake()->image('image.png');
         Passport::actingAs(
             User::factory()->create(['role' => 'admin',]),
             ['api']

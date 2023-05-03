@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Inventory Challenge</title>
+<title>Inventory</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
     <nav class="md:flex md:justify-between md:items-center">
         <div>
             <a href="/">
-                <span class="font-bold text-black-500">Inventory Challenge</span>
+                <span class="font-bold text-black-500">Product Inventory</span>
 
             </a>
         </div>
